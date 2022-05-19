@@ -8,7 +8,7 @@ function loadAllItems() {
         method: "GET",
         success: function (resp) {
             for (const item of resp.data) {
-                let row = `<tr><td>${ite.code}</td><td>${item.name}</td><td>${item.unitPrice}</td><td>${item.qtyOnHand}</td></tr>`;
+                let row = `<tr><td>${item.code}</td><td>${item.name}</td><td>${item.unitPrice}</td><td>${item.qtyOnHand}</td></tr>`;
                 $("#item-Tbody").append(row);
             }
         },
@@ -42,27 +42,6 @@ function saveItem() {
             console.log(error);
         }
     });
-    // //gather customer information
-    // let itemCode = $("#Item-id").val();
-    // let itemName = $("#Item-name").val();
-    // let itemPrice = $("#Item-price").val();
-    // let itemQty = $("#Item-quantity").val();
-    //
-    // //create Object
-    // var itemObject=new ItemDT0(itemCode,itemName,itemPrice,itemQty);
-    // for (let i = 0; i < itemDB.length; i++) {
-    //     if(itemDB[i].getItemCode()==itemCode){
-    //         itemDB[i].setItemName(itemName);
-    //         itemDB[i].setItemprice(itemPrice);
-    //         itemDB[i].setItemQuantity(itemQty);
-    //         $("#ItemstaticBackdrop").modal('hide');
-    //         $("#save-Item").attr('disabled', true);
-    //         $('#Item-id').attr('readonly', false);
-    //         return;
-    //     }
-    // }
-    //
-    // itemDB.push(itemObject);
     $("#ItemstaticBackdrop").modal('hide');
     $("#save-Item").attr('disabled', true);
     $('#Item-id').attr('readonly', false);
@@ -107,23 +86,27 @@ $("#clear-Item").click(function (){
 });
 
 $('#itemSearch_button').click(function (){
-    var code=$("#txtItem").val();
-    for (let i = 0; i < itemDB.length; i++) {
-        if (itemDB[i].getItemCode()==code){
-            $("#staticBackdrop2").modal('show');
-            var item=searchItemFromID(code);
-            $("#Item-Code1").val(item.getItemCode());
-            $("#item-name1").val(item.getItemName());
-            $("#item-price1").val(item.getItemprice());
-            $("#Item-Quantity1").val(item.getItemQuantity());
-
+    var itemCode=$("#txtItem").val();
+    $.ajax({
+        url: "http://localhost:8080/BackEnd_Web_exploded/item?option=SEARCH&code="+itemCode,
+        method: "GET",
+        success: function (resp) {
+            if (resp.status==200){
+                $("#staticBackdrop2").modal('show');
+                $("#Item-Code1").val(resp.code);
+                $("#item-name1").val(resp.name);
+                $("#item-price1").val(resp.unitPrice);
+                $("#Item-Quantity1").val(resp.qtyOnHand);
+                $('#txtItem').val("");
+            }else{
+                alert("Invalid Item Code.Try Again!");
+            }
+        },
+        error: function (ob, state) {
+            console.log(ob, state)
         }
-    }
-    if (item){
-        $('#txtItem').val("");
-    }else{
-        alert("Invalid Item Code.Try Again!")
-    }
+
+    });
     $("#itemSearch_button").attr('disabled', true);
 
 });
@@ -139,7 +122,7 @@ function clearAfterItemUpdate() {
 $("#update-item1").click(function (){
     updateItem();
     clearAfterItemUpdate();
-    loadItemId();
+    // loadItemId();
 });
 
 $("#item_closebtn").click(function (){
@@ -147,17 +130,33 @@ $("#item_closebtn").click(function (){
 });
 
 function updateItem(){
-    var itemCode=$("#Item-Code1").val();
-    var itemName=$("#item-name1").val();
-    var itemPrice=$("#item-price1").val();
-    var itemQty=$("#Item-Quantity1").val();
-    for (let i = 0; i < itemDB.length; i++) {
-        if (itemDB[i].getItemCode()==itemCode){
-            itemDB[i].setItemName(itemName);
-            itemDB[i].setItemprice(itemPrice);
-            itemDB[i].setItemQuantity(itemQty);
-        }
+    var itemOb={
+        code:$("#Item-Code1").val(),
+        name:$("#item-name1").val(),
+        unitPrice:$("#item-price1").val(),
+        qtyOnHand:$("#Item-Quantity1").val(),
     }
+
+    $.ajax({
+        url: "http://localhost:8080/BackEnd_Web_exploded/item",
+        method: "PUT",
+        contentType:"application/json",
+        data: JSON.stringify(itemOb),
+        success: function (res) {
+            if (res.status == 200) {
+                alert(res.message);
+                loadAllItems();
+            } else if (res.status == 400) {
+                alert(res.message);
+            } else {
+                alert(res.data);
+            }
+        },
+        error: function (ob, errorStatus) {
+            console.log(ob);
+        }
+    });
+
     $("#staticBackdrop2").modal('hide');
 }
 
@@ -168,12 +167,30 @@ $("#delete-item1").click(function (){
 });
 
 function deleteItem(){
-    var code=$("#Item-Code1").val();
-    for (let i = 0; i < itemDB.length; i++) {
-        if (itemDB[i].getItemCode()==code){
-            itemDB.splice(i,1);
+    var itemCode=$("#Item-Code1").val();
+    $.ajax({
+        url: "http://localhost:8080/BackEnd_Web_exploded/item?code=" +itemCode,
+        method: "DELETE",
+        success: function (res) {
+            console.log(res);
+            if (res.status == 200) {
+                alert(res.message);
+                loadAllItems();
+                loadItemId();
+            } else if (res.status == 400) {
+                alert(res.data);
+            } else {
+                alert(res.data);
+            }
+
+        },
+        error: function (ob, status, t) {
+            console.log(ob);
+            console.log(status);
+            console.log(t);
         }
-    }
+    });
+
     $("#staticBackdrop2").modal('hide');
 }
 

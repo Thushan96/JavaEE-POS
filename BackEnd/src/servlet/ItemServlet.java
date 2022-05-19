@@ -1,9 +1,7 @@
 package servlet;
 
 import javax.annotation.Resource;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,9 +33,9 @@ public class ItemServlet extends HttpServlet {
             switch (option) {
                 case "SEARCH":
                     System.out.println("Search");
-                    String cusId = req.getParameter("cusId");
+                    String itemCode = req.getParameter("code");
                     PreparedStatement pstm = connection.prepareStatement("SELECT * FROM item WHERE code=?");
-                    pstm.setObject(1, cusId);
+                    pstm.setObject(1, itemCode);
                     ResultSet searchSet = pstm.executeQuery();
 
                     JsonObjectBuilder searchCustomer = Json.createObjectBuilder();
@@ -45,8 +43,8 @@ public class ItemServlet extends HttpServlet {
                     while (searchSet.next()) {
                         String code = searchSet.getString(1);
                         String name = searchSet.getString(2);
-                        String unitPrice = searchSet.getString(3);
-                        String qtyOnHand = searchSet.getString(4);
+                        double unitPrice = searchSet.getDouble(3);
+                        int qtyOnHand = searchSet.getInt(4);
 
                         System.out.println(code);
                         System.out.println(name);
@@ -64,7 +62,7 @@ public class ItemServlet extends HttpServlet {
                     writer.print(searchCustomer.build());
 
                     break;
-                case "CustId":
+                case "ItemId":
                     ResultSet custId = connection.prepareStatement("select code from item").executeQuery();
                     JsonArrayBuilder arrayBuilder2 = Json.createArrayBuilder();
                     while (custId.next()){
@@ -86,8 +84,8 @@ public class ItemServlet extends HttpServlet {
                     while (rst.next()) {
                         String code = rst.getString(1);
                         String name = rst.getString(2);
-                        String unitPrice = rst.getString(3);
-                        double qtyOnHand = rst.getDouble(4);
+                        double unitPrice = rst.getDouble(3);
+                        int qtyOnHand = rst.getInt(4);
 
                         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                         objectBuilder.add("code", code);
@@ -149,4 +147,86 @@ public class ItemServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonObject jsonObject = reader.readObject();
+        String code = jsonObject.getString("code");
+        String name = jsonObject.getString("name");
+        String UnitPrice = jsonObject.getString("unitPrice");
+        String qtyOnHand = jsonObject.getString("qtyOnHand");
+        PrintWriter writer = resp.getWriter();
+
+
+        resp.setContentType("application/json");
+
+
+        try {
+            Connection connection = ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("Update item set name=?,unitPrice=?,qtyOnHand=? where code=?");
+            pstm.setObject(1, name);
+            pstm.setObject(2, UnitPrice);
+            pstm.setObject(3, qtyOnHand);
+            pstm.setObject(4, code);
+            if (pstm.executeUpdate() > 0) {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("status", 200);
+                objectBuilder.add("message", "Successfully Updated");
+                objectBuilder.add("data", "");
+                writer.print(objectBuilder.build());
+            } else {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("status", 400);
+                objectBuilder.add("message", "Update Failed");
+                objectBuilder.add("data", "");
+                writer.print(objectBuilder.build());
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("status", 500);
+            objectBuilder.add("message", "Update Failed");
+            objectBuilder.add("data", throwables.getLocalizedMessage());
+            writer.print(objectBuilder.build());
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String code = req.getParameter("code");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+
+
+        try {
+            Connection connection = ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("Delete from item where code=?");
+            pstm.setObject(1, code);
+
+            if (pstm.executeUpdate() > 0) {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("status", 200);
+                objectBuilder.add("data", "");
+                objectBuilder.add("message", "Successfully Deleted");
+                writer.print(objectBuilder.build());
+            } else {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("status", 400);
+                objectBuilder.add("data", "Wrong Id Inserted");
+                objectBuilder.add("message", "");
+                writer.print(objectBuilder.build());
+            }
+            connection.close();
+
+        } catch (SQLException throwables) {
+            resp.setStatus(200);
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("status", 500);
+            objectBuilder.add("message", "Error");
+            objectBuilder.add("data", throwables.getLocalizedMessage());
+            writer.print(objectBuilder.build());
+        }
+    }
+
 }

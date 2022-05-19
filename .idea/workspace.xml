@@ -3,17 +3,24 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="BackEnd:Web exploded" />
-      <artifact name="FrontEnd:Web exploded" />
-      <artifact name="FrontEnd:Web exploded" />
+      <artifact name="BackEnd:Web exploded" />
+      <artifact name="BackEnd:Web exploded" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5020919b-b9ce-4393-b3d8-6091177675ed" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BackEnd_Web_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/BackEnd_Web_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/FrontEnd_Web_exploded.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/BackEnd.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/BackEnd.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/FrontEnd.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/FrontEnd.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/CustomerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/CustomerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/FrontEnd_Web_exploded/FrontEnd_Web exploded.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/FrontEnd_Web_exploded/FrontEnd_Web exploded.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/CustomerServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/CustomerServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +75,7 @@
     <property name="js.last.introduce.type" value="VAR" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/BackEnd/web" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -175,8 +182,8 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="FrontEnd:Web exploded" />
-          <artifact name="FrontEnd:Web exploded" />
+          <artifact name="BackEnd:Web exploded" />
+          <artifact name="BackEnd:Web exploded" />
           <artifact name="BackEnd:Web exploded" />
         </option>
       </method>
@@ -196,7 +203,8 @@
       <workItem from="1652596926112" duration="981000" />
       <workItem from="1652599014593" duration="815000" />
       <workItem from="1652599898248" duration="46426000" />
-      <workItem from="1652858123135" duration="34121000" />
+      <workItem from="1652858123135" duration="35208000" />
+      <workItem from="1652926792068" duration="30783000" />
     </task>
     <servers />
   </component>

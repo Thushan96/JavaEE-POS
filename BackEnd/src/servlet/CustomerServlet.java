@@ -78,6 +78,21 @@ public class CustomerServlet extends HttpServlet {
                     responseObject.add("data", arrayBuilder2.build());
                     writer.print(responseObject.build());
                     break;
+                case "CustName":
+                    String Id = req.getParameter("cusId");
+                    PreparedStatement preparedStatement = connection.prepareStatement("select name from customer WHERE id=?");
+                    preparedStatement.setObject(1, Id);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    JsonObjectBuilder searchCustomerName = Json.createObjectBuilder();
+                    while (resultSet.next()){
+                        String name = resultSet.getString(1);
+                        searchCustomerName.add("status", 200);
+                        searchCustomerName.add("name", name);
+                    }
+
+                    writer.print(searchCustomerName.build());
+                    break;
+
                 case "GETALL":
                     ResultSet rst = connection.prepareStatement("select * from Customer").executeQuery();
                     JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(); // json array
