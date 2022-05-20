@@ -1,7 +1,7 @@
 package servlet;
 
-import dao.custom.OrderDAO;
-import dao.custom.OrderDetailDAO;
+
+
 import entity.Order;
 import entity.OrderDetail;
 
@@ -129,22 +129,30 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JsonReader reader = Json.createReader(req.getReader());
-        JsonObject jsonObject = reader.readObject();
-        String orderId = jsonObject.getString("orderId");
-        String orderDate = jsonObject.getString("orderDate");
-        String customerId = jsonObject.getString("customerId");
-        double orderTotal = Double.parseDouble(jsonObject.getString("orderTotal"));
-        JsonArray orderDetails = jsonObject.getJsonArray("orderDetails");
-
+        System.out.println("inside do post method");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
         JsonObjectBuilder builder = Json.createObjectBuilder();
 
-        resp.setContentType("application/json");
-
-        PrintWriter writer = resp.getWriter();
-
         try {
+            System.out.println("inside try catch method");
             Connection connection = ds.getConnection();
+            JsonReader reader = Json.createReader(req.getReader());
+            JsonObject jsonObject = reader.readObject();
+            System.out.println(jsonObject);
+            String orderId = jsonObject.getString("orderId");
+            System.out.println(orderId);
+            String orderDate = jsonObject.getString("orderDate");
+            System.out.println(orderDate);
+            String customerId = jsonObject.getString("customerId");
+            System.out.println(customerId);
+//            double orderTotal = Double.parseDouble(jsonObject.getString("orderTotal"));
+            double orderTotal = Double.parseDouble(jsonObject.getString("orderTotal"));
+            System.out.println(orderTotal);
+            JsonArray orderDetails = jsonObject.getJsonArray("orderDetails");
+            System.out.println(orderDetails);
+
+            System.out.println("2222222222222222222222");
             connection.setAutoCommit(false);
 
             Order order = new Order(orderId, orderDate, customerId, orderTotal);
@@ -154,6 +162,7 @@ public class OrderServlet extends HttpServlet {
             pstm.setObject(2,order.getOrderDate());
             pstm.setObject(3,order.getCustomerId());
             pstm.setObject(4,order.getTotal());
+            System.out.println("order table updated");
 
 
 
@@ -176,6 +185,7 @@ public class OrderServlet extends HttpServlet {
 //                boolean orderDetailsAdd = OrderDetailDAO.add(orderDetail);
 //                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)", ,  (), (),, orderDetail.getTotal()");
 
+                System.out.println("order detail table updated");
                 if (!(pstm.executeUpdate() >0)) {
                     connection.rollback();
                     connection.setAutoCommit(true);
@@ -191,7 +201,9 @@ public class OrderServlet extends HttpServlet {
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
         } catch (SQLException e) {
+            System.out.println("33333333333");
             e.printStackTrace();
+            System.out.println(e);
         }
 
         builder.add("boolean", true);

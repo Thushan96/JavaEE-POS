@@ -3,19 +3,15 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="BackEnd:Web exploded" />
-      <artifact name="BackEnd:Web exploded" />
-      <artifact name="BackEnd:Web exploded" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5020919b-b9ce-4393-b3d8-6091177675ed" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BackEnd_Web_exploded.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/FrontEnd_Web_exploded/FrontEnd_Web exploded.war" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" afterDir="false" />
     </list>
@@ -107,7 +103,7 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="bb0c70ec-1b5d-4c3e-8cb4-d22f7375c8b9" />
+        <option name="BASE_DIRECTORY_NAME" value="af6d7a5a-34a9-4ebb-856d-9a16837a45c3" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -115,7 +111,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="57256" />
+        <option name="DEBUG_PORT" value="50556" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -181,8 +177,6 @@
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
           <artifact name="BackEnd:Web exploded" />
-          <artifact name="BackEnd:Web exploded" />
-          <artifact name="BackEnd:Web exploded" />
         </option>
       </method>
     </configuration>
@@ -205,7 +199,8 @@
       <workItem from="1652926792068" duration="31175000" />
       <workItem from="1653013889759" duration="13124000" />
       <workItem from="1653046461082" duration="3713000" />
-      <workItem from="1653050415682" duration="2593000" />
+      <workItem from="1653050415682" duration="12347000" />
+      <workItem from="1653065873708" duration="5281000" />
     </task>
     <servers />
   </component>
@@ -222,16 +217,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java</url>
-          <line>143</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
