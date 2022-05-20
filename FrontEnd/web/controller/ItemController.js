@@ -31,7 +31,7 @@ function saveItem() {
             if (res.status==200){
                 alert(res.message);
                 loadAllItems();
-                // loadCustomerId();
+                loadItemId();
             }else {
                 alert(res.data);
             }
@@ -138,7 +138,7 @@ function updateItem(){
     }
 
     $.ajax({
-        url: "http://localhost:8080/BackEnd_Web_exploded/item",
+        url: "http://localhost:8080/BackEnd_Web_exploded/item?option=UPDATEALL",
         method: "PUT",
         contentType:"application/json",
         data: JSON.stringify(itemOb),

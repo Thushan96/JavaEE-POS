@@ -149,7 +149,15 @@ public class OrderServlet extends HttpServlet {
 
             Order order = new Order(orderId, orderDate, customerId, orderTotal);
 //            boolean add = OrderDAO.add(order);
-            if (!add) {
+            PreparedStatement pstm = connection.prepareStatement("INSERT INTO `Order` VALUES (?,?,?,?)");
+            pstm.setObject(1,order.getOrderId());
+            pstm.setObject(2,order.getOrderDate());
+            pstm.setObject(3,order.getCustomerId());
+            pstm.setObject(4,order.getTotal());
+
+
+
+            if (!(pstm.executeUpdate() >0)) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 builder.add("boolean", false);
@@ -158,8 +166,17 @@ public class OrderServlet extends HttpServlet {
 
             for (JsonValue object : orderDetails) {
                 OrderDetail orderDetail = new OrderDetail(orderId, object.asJsonObject().getString("itemCode"), object.asJsonObject().getString("itemName"), Double.parseDouble(object.asJsonObject().getString("unitPrice")), object.asJsonObject().getInt("buyQty"), object.asJsonObject().getInt("total"));
-                boolean orderDetailsAdd = OrderDetailDAO.add(orderDetail);
-                if (!orderDetailsAdd) {
+                PreparedStatement pstm2 = connection.prepareStatement("INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)");
+                pstm2.setObject(1,orderDetail.getOrderId());
+                pstm2.setObject(2,orderDetail.getItemCode());
+                pstm2.setObject(3,orderDetail.getItemName());
+                pstm2.setObject(4,orderDetail.getUnitPrice());
+                pstm2.setObject(5, orderDetail.getBuyQty());
+                pstm2.setObject(6,orderDetail.getTotal());
+//                boolean orderDetailsAdd = OrderDetailDAO.add(orderDetail);
+//                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)", ,  (), (),, orderDetail.getTotal()");
+
+                if (!(pstm.executeUpdate() >0)) {
                     connection.rollback();
                     connection.setAutoCommit(true);
                     builder.add("boolean", false);
@@ -169,9 +186,10 @@ public class OrderServlet extends HttpServlet {
 
             connection.commit();
             connection.setAutoCommit(true);
+            connection.close();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

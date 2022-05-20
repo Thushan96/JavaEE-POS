@@ -155,19 +155,49 @@ $("#qty-order").on('keyup', function (){
 });
 
 function updateQty(){
-    var itemCode=$("#cmbItem option:selected").text();
-    orderQTY= parseInt($("#qty-order").val());
-    for (let i = itemDB.length - 1; i >= 0; i--) {
-        if (itemDB[i].getItemCode()==itemCode){
-            itemDB[i].setItemQuantity(itemDB[i].getItemQuantity()-orderQTY);
-        }
+    var QtyOnHand=parseInt($("#qtyOnHand-order").val());
+    var orderQTY=parseInt($("#qty-order").val())
+    var total=QtyOnHand-orderQTY;
+
+
+    var itemUpdate={
+        itemCode:$("#cmbItem option:selected").text(),
+        QTYLeft:total
     }
+
+    $.ajax({
+        url: "http://localhost:8080/BackEnd_Web_exploded/item?option=UPDATEQTY",
+        method: "PUT",
+        contentType:"application/json",
+        data: JSON.stringify(itemUpdate),
+        success: function (res) {
+            if (res.status==200){
+                console.log(res.message);
+                setItemData($("#cmbItem option:selected").text());
+            }else  if (res.status==400){
+                console.log(res.message);
+            }else {
+                console.log(res.data);
+                console.log(res.message);
+            }
+        }
+    });
+
+    // var itemCode=$("#cmbItem option:selected").text();
+    // orderQTY= parseInt($("#qty-order").val());
+    // for (let i = itemDB.length - 1; i >= 0; i--) {
+    //     if (itemDB[i].getItemCode()==itemCode){
+    //         itemDB[i].setItemQuantity(itemDB[i].getItemQuantity()-orderQTY);
+    //     }
+    // }
+
 
 }
 
 
 let grandTotal,Total,orderQTY,OrderDetailsObject;
 var orderDB=[];
+var itemDB=[];
 $("#add-order").click(function (){
     $("#cmbCustomer").attr("disabled", true);
     Total=0;
@@ -241,37 +271,37 @@ $("#add-order").click(function (){
         orderDetails: orderDetails
     }
 
-    $.ajax({
-        url: "http://localhost:8080/BackEnd_Web_exploded/order",
-        method: "POST",
-        data:JSON.stringify(order),
-        success:function (res){
-            if (res.status==200){
-                alert(res.message);
-                setTotal();
-                setEnable();
-                loadDataToOrderTable();
-                updateQty();
-                setItemData(itemCode);
-                $("#qty-order").val("");
-            }else {
-                alert(res.data);
-            }
-        },
-        error: function (ob, textStatus, error) {
-            console.log(ob);
-            console.log(textStatus);
-            console.log(error);
-        }
-    });
+    // $.ajax({
+    //     url: "http://localhost:8080/BackEnd_Web_exploded/order",
+    //     method: "POST",
+    //     data:JSON.stringify(order),
+    //     success:function (res){
+    //         if (res.status==200){
+    //             alert(res.message);
+    //             setTotal();
+    //             setEnable();
+    //             loadDataToOrderTable();
+    //             updateQty();
+    //             setItemData(itemCode);
+    //             $("#qty-order").val("");
+    //         }else {
+    //             alert(res.data);
+    //         }
+    //     },
+    //     error: function (ob, textStatus, error) {
+    //         console.log(ob);
+    //         console.log(textStatus);
+    //         console.log(error);
+    //     }
+    // });
 
 
-    // setTotal();
-    // setEnable();
-    // loadDataToOrderTable();
-    // updateQty();
-    // setItemData(itemCode);
-    // $("#qty-order").val("");
+    setTotal();
+    setEnable();
+    loadDataToOrderTable();
+    updateQty();
+    setItemData(itemCode);
+    $("#qty-order").val("");
 });
 
 $("#place-order").click(function (){

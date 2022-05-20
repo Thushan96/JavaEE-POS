@@ -9,9 +9,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5020919b-b9ce-4393-b3d8-6091177675ed" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b84f3da3-0d37-4ea3-8c93-1acc306b7745.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b84f3da3-0d37-4ea3-8c93-1acc306b7745.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/FrontEnd_Web_exploded/FrontEnd_Web exploded.war" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +203,9 @@
       <workItem from="1652599898248" duration="46426000" />
       <workItem from="1652858123135" duration="35208000" />
       <workItem from="1652926792068" duration="31175000" />
-      <workItem from="1653013889759" duration="4710000" />
+      <workItem from="1653013889759" duration="13124000" />
+      <workItem from="1653046461082" duration="3713000" />
+      <workItem from="1653050415682" duration="2593000" />
     </task>
     <servers />
   </component>
@@ -220,7 +228,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java</url>
-          <line>140</line>
+          <line>143</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
