@@ -1,5 +1,11 @@
 package servlet;
 
+import dao.custom.OrderDAO;
+import dao.custom.OrderDetailDAO;
+import entity.Order;
+import entity.OrderDetail;
+
+
 import javax.annotation.Resource;
 import javax.json.*;
 import javax.servlet.ServletException;
@@ -137,38 +143,38 @@ public class OrderServlet extends HttpServlet {
 
         PrintWriter writer = resp.getWriter();
 
-//        try {
-//            Connection connection = ds.getConnection();
-//            connection.setAutoCommit(false);
-//
-//            Order order = new Order(orderId, orderDate, customerId, orderTotal);
-//            boolean add = orderDAO.add(order);
-//            if (!add) {
-//                connection.rollback();
-//                connection.setAutoCommit(true);
-//                builder.add("boolean", false);
-//                writer.print(builder.build());
-//            }
-//
-//            for (JsonValue object : orderDetails) {
-//                OrderDetail orderDetail = new OrderDetail(orderId, object.asJsonObject().getString("itemCode"), object.asJsonObject().getString("itemName"), Double.parseDouble(object.asJsonObject().getString("unitPrice")), object.asJsonObject().getInt("buyQty"), object.asJsonObject().getInt("total"));
-//                boolean orderDetailsAdd = orderDetailDAO.add(orderDetail);
-//                if (!orderDetailsAdd) {
-//                    connection.rollback();
-//                    connection.setAutoCommit(true);
-//                    builder.add("boolean", false);
-//                    writer.print(builder.build());
-//                }
-//            }
-//
-//            connection.commit();
-//            connection.setAutoCommit(true);
-//
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Connection connection = ds.getConnection();
+            connection.setAutoCommit(false);
+
+            Order order = new Order(orderId, orderDate, customerId, orderTotal);
+//            boolean add = OrderDAO.add(order);
+            if (!add) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                builder.add("boolean", false);
+                writer.print(builder.build());
+            }
+
+            for (JsonValue object : orderDetails) {
+                OrderDetail orderDetail = new OrderDetail(orderId, object.asJsonObject().getString("itemCode"), object.asJsonObject().getString("itemName"), Double.parseDouble(object.asJsonObject().getString("unitPrice")), object.asJsonObject().getInt("buyQty"), object.asJsonObject().getInt("total"));
+                boolean orderDetailsAdd = OrderDetailDAO.add(orderDetail);
+                if (!orderDetailsAdd) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    builder.add("boolean", false);
+                    writer.print(builder.build());
+                }
+            }
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         builder.add("boolean", true);
         writer.print(builder.build());
