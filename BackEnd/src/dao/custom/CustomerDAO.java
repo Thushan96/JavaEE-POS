@@ -4,9 +4,10 @@ import dao.CrudDAO;
 import entity.Customer;
 
 import javax.json.JsonObject;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 
 public interface CustomerDAO extends CrudDAO<Customer, String> {
-    JsonObject generateId() throws SQLException, ClassNotFoundException;
+    JsonObject generateId(Connection connection) throws SQLException, ClassNotFoundException;
 }

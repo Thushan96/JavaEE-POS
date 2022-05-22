@@ -283,6 +283,7 @@ $("#add-order").click(function (){
 
 
 $("#place-order").click(function (){
+    $("#place-order").attr("disabled", true);
     var orderDetails = [];
     for (let i = 0; i < orderDB.length; i++) {
         console.log(orderDB[i].getOrderId());
@@ -320,16 +321,17 @@ $("#place-order").click(function (){
         data:JSON.stringify(order),
         success:function (res){
             if (res.status==200){
-                alert(res.message)
-                clearData();
-                setOrderId();
-                var d = new Date();
-                $("#order-date").val(d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate());
+                alert(res.message);
             }else {
-                alert(res.data);
+                alert(res.message);
             }
+            clearData();
+            setOrderId()
+            var d = new Date();
+            $("#order-date").val(d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate());
         },
         error: function (ob, textStatus, error) {
+            alert("operation failed");
             console.log(ob);
             console.log(textStatus);
             console.log(error);

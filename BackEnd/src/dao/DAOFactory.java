@@ -5,10 +5,6 @@ import dao.custom.impl.ItemDAOImpl;
 import dao.custom.impl.OrderDAOImpl;
 import dao.custom.impl.OrderDetailDAOImpl;
 
-/**
- * @author : M-Prageeth
- * @created : 19/05/2022 - 9:27 AM
- **/
 public class DAOFactory {
     private static DAOFactory daoFactory;
 

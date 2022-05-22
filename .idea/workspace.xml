@@ -7,12 +7,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5020919b-b9ce-4393-b3d8-6091177675ed" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/BackEnd_Web_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b84f3da3-0d37-4ea3-8c93-1acc306b7745.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b84f3da3-0d37-4ea3-8c93-1acc306b7745.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/CrudDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/CrudDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/CrudUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/CrudUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/DAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/ItemDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDetailDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDetailDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/CustomerDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/CustomerDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/ItemDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/ItemDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDetailDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDetailDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/ItemServlet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +35,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -200,7 +211,10 @@
       <workItem from="1653013889759" duration="13124000" />
       <workItem from="1653046461082" duration="3713000" />
       <workItem from="1653050415682" duration="12347000" />
-      <workItem from="1653065873708" duration="5281000" />
+      <workItem from="1653065873708" duration="6003000" />
+      <workItem from="1653108558699" duration="14440000" />
+      <workItem from="1653193874406" duration="1111000" />
+      <workItem from="1653203343857" duration="6568000" />
     </task>
     <servers />
   </component>
@@ -217,5 +231,21 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BackEnd/src/dao/custom/CustomerDAO.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

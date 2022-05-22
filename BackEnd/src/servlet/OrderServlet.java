@@ -146,7 +146,6 @@ public class OrderServlet extends HttpServlet {
             System.out.println(orderDate);
             String customerId = jsonObject.getString("customerId");
             System.out.println(customerId);
-//            double orderTotal = Double.parseDouble(jsonObject.getString("orderTotal"));
             double orderTotal = Double.parseDouble(jsonObject.getString("orderTotal"));
             System.out.println(orderTotal);
             JsonArray orderDetails = jsonObject.getJsonArray("orderDetails");
@@ -157,56 +156,67 @@ public class OrderServlet extends HttpServlet {
 
             Order order = new Order(orderId, orderDate, customerId, orderTotal);
 //            boolean add = OrderDAO.add(order);
+
+
+            int i=0;
+
             PreparedStatement pstm = connection.prepareStatement("INSERT INTO `Order` VALUES (?,?,?,?)");
-            pstm.setObject(1,order.getOrderId());
-            pstm.setObject(2,order.getOrderDate());
-            pstm.setObject(3,order.getCustomerId());
-            pstm.setObject(4,order.getTotal());
-            System.out.println("order table updated");
+            pstm.setObject(1,orderId);
+            pstm.setObject(2,orderDate);
+            pstm.setObject(3,customerId);
+            pstm.setObject(4,orderTotal);
 
 
 
-            if (!(pstm.executeUpdate() >0)) {
+            if (pstm.executeUpdate() >0) {
+                System.out.println("order table updated ");
+                connection.commit();
+
+                for (JsonValue object : orderDetails) {
+                    OrderDetail orderDetail = new OrderDetail(orderId, object.asJsonObject().getString("itemCode"), object.asJsonObject().getString("itemName"), Double.parseDouble(object.asJsonObject().getString("unitPrice")), object.asJsonObject().getInt("buyQty"), object.asJsonObject().getInt("total"));
+                    PreparedStatement pstm2 = connection.prepareStatement("INSERT INTO `orderdetails` VALUES (?,?,?,?,?,?)");
+                    pstm2.setObject(1, orderDetail.getOrderId());
+                    pstm2.setObject(2, orderDetail.getItemCode());
+                    pstm2.setObject(3, orderDetail.getItemName());
+                    pstm2.setObject(4, orderDetail.getUnitPrice());
+                    pstm2.setObject(5, orderDetail.getBuyQty());
+                    pstm2.setObject(6, orderDetail.getTotal());
+//                boolean orderDetailsAdd = OrderDetailDAO.add(orderDetail);
+//                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)", ,  (), (),, orderDetail.getTotal()");
+                    i=pstm2.executeUpdate();
+
+                }
+                if (i >0) {
+                        System.out.println("order detail table updated");
+                        connection.commit();
+                        builder.add("status", 200);
+                        builder.add("message", "Order Placed.Thank You");
+                        writer.print(builder.build());
+                    }else{
+                        connection.rollback();
+                        builder.add("status", 400);
+                        builder.add("message", "operation failed please try again");
+                        writer.print(builder.build());
+                    }
+            }else{
                 connection.rollback();
-                connection.setAutoCommit(true);
-                builder.add("boolean", false);
+                builder.add("status", 500);
+                builder.add("message", "operation failed please try again");
                 writer.print(builder.build());
             }
 
-            for (JsonValue object : orderDetails) {
-                OrderDetail orderDetail = new OrderDetail(orderId, object.asJsonObject().getString("itemCode"), object.asJsonObject().getString("itemName"), Double.parseDouble(object.asJsonObject().getString("unitPrice")), object.asJsonObject().getInt("buyQty"), object.asJsonObject().getInt("total"));
-                PreparedStatement pstm2 = connection.prepareStatement("INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)");
-                pstm2.setObject(1,orderDetail.getOrderId());
-                pstm2.setObject(2,orderDetail.getItemCode());
-                pstm2.setObject(3,orderDetail.getItemName());
-                pstm2.setObject(4,orderDetail.getUnitPrice());
-                pstm2.setObject(5, orderDetail.getBuyQty());
-                pstm2.setObject(6,orderDetail.getTotal());
-//                boolean orderDetailsAdd = OrderDetailDAO.add(orderDetail);
-//                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)", ,  (), (),, orderDetail.getTotal()");
-
-                System.out.println("order detail table updated");
-                if (!(pstm.executeUpdate() >0)) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    builder.add("boolean", false);
-                    writer.print(builder.build());
-                }
-            }
-
-            connection.commit();
             connection.setAutoCommit(true);
             connection.close();
 
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
         } catch (SQLException e) {
-            System.out.println("33333333333");
             e.printStackTrace();
-            System.out.println(e);
+            builder.add("status", 500);
+            builder.add("message", "operation failed");
+            writer.print(builder.build());
         }
 
-        builder.add("boolean", true);
-        writer.print(builder.build());
+
     }
 }
