@@ -30,7 +30,7 @@ public class ItemBOImpl implements ItemBO {
     }
 
     @Override
-    public JsonObject generateItemCode(Connection connection) throws SQLException, ClassNotFoundException {
+    public JsonArray generateItemCode(Connection connection) throws SQLException, ClassNotFoundException {
         return itemDAO.generateCode(connection);
     }
 
@@ -44,6 +44,11 @@ public class ItemBOImpl implements ItemBO {
     public boolean updateItem(Connection connection, ItemDTO itemDTO) throws SQLException, ClassNotFoundException {
         Item item = new Item(itemDTO.getCode(), itemDTO.getName(), itemDTO.getUnitPrice(), itemDTO.getQty());
         return itemDAO.update(connection, item);
+    }
+
+    @Override
+    public boolean updateQty(Connection connection, int i,String s) throws SQLException, ClassNotFoundException {
+        return itemDAO.updateQty(connection, i,s);
     }
 
     @Override

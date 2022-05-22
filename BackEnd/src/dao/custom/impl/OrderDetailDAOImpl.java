@@ -2,6 +2,7 @@ package dao.custom.impl;
 
 import dao.CrudUtil;
 import dao.custom.OrderDetailDAO;
+import dto.OrderDetailDTO;
 import entity.OrderDetail;
 
 import javax.json.Json;
@@ -11,6 +12,7 @@ import javax.json.JsonObjectBuilder;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class OrderDetailDAOImpl implements OrderDetailDAO {
@@ -33,8 +35,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public boolean add(Connection connection,OrderDetail orderDetail) throws SQLException, ClassNotFoundException {
-        return CrudUtil.executeUpdate(connection,"INSERT INTO `Order Detail` VALUES (?,?,?,?,?,?)", orderDetail.getOrderId(), orderDetail.getItemCode(), orderDetail.getItemName(), orderDetail.getUnitPrice(), orderDetail.getBuyQty(), orderDetail.getTotal());
+    public boolean add(Connection connection, OrderDetail orderDetail) throws SQLException, ClassNotFoundException {
+        return CrudUtil.executeUpdate(connection,"INSERT INTO `orderdetails` VALUES (?,?,?,?,?,?)",orderDetail.getOrderId(),orderDetail.getItemCode(),orderDetail.getItemName(),orderDetail.getUnitPrice(),orderDetail.getBuyQty(),orderDetail.getTotal());
+
     }
 
     @Override
@@ -52,21 +55,4 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
         return null;
     }
 
-    @Override
-    public JsonArray searchOrderDetails(Connection connection, String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.executeQuery(connection, "SELECT * FROM `Order Detail` WHERE orderId=?", id);
-        JsonArrayBuilder orderDetailArray = Json.createArrayBuilder();
-        while (rst.next()) {
-            OrderDetail orderDetail = new OrderDetail(rst.getString(1), rst.getString(2), rst.getString(3), rst.getDouble(4), rst.getInt(5), rst.getDouble(6));
-            JsonObjectBuilder obj = Json.createObjectBuilder();
-            obj.add("orderId", orderDetail.getOrderId());
-            obj.add("itemCode", orderDetail.getOrderId());
-            obj.add("itemName", orderDetail.getOrderId());
-            obj.add("unitPrice", orderDetail.getOrderId());
-            obj.add("qty", orderDetail.getOrderId());
-            obj.add("total", orderDetail.getOrderId());
-            orderDetailArray.add(obj.build());
-        }
-        return orderDetailArray.build();
-    }
 }

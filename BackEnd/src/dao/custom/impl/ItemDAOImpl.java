@@ -54,34 +54,20 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public JsonObject generateCode(Connection connection) throws SQLException, ClassNotFoundException {
-        ResultSet codeSet = CrudUtil.executeQuery(connection, "SELECT code FROM Item ORDER BY code DESC LIMIT 1");
-        JsonObjectBuilder obj = Json.createObjectBuilder();
-        if (codeSet.next()) {
-            int tempCode = Integer.parseInt(codeSet.getString(1).split("-")[1]);
-            tempCode = tempCode + 1;
-            if (tempCode <= 9) {
-                String code = "I00-000" + tempCode;
-                obj.add("code", code);
-            } else if (tempCode <= 99) {
-                String code = "I00-00" + tempCode;
-                obj.add("code", code);
-            } else if (tempCode <= 999) {
-                String code = "I00-0" + tempCode;
-                obj.add("code", code);
-            } else if (tempCode <= 9999) {
-                String code = "I00-" + tempCode;
-                obj.add("code", code);
-            }
-        } else {
-            String code = "I00-0001";
-            obj.add("code", code);
+    public JsonArray generateCode(Connection connection) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.executeQuery(connection, "SELECT code FROM Item");
+        JsonArrayBuilder arrayBuilder2 = Json.createArrayBuilder();
+        while (resultSet.next()){
+            String id = resultSet.getString(1);
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("code", id);
+            arrayBuilder2.add(objectBuilder.build());
         }
-        return obj.build();
+        return arrayBuilder2.build();
     }
 
     @Override
     public boolean updateQty(Connection connection, int qty, String code) throws SQLException, ClassNotFoundException {
-        return CrudUtil.executeUpdate(connection, "UPDATE Item SET qtyOnHand=(qtyOnHand-" + qty + ") WHERE code='" + code + "'");
+        return CrudUtil.executeUpdate(connection, "UPDATE Item SET qtyOnHand='" + qty + "' WHERE code='" + code + "'");
     }
 }

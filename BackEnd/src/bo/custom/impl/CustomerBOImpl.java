@@ -31,7 +31,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public JsonObject generateCustomerId(Connection connection) throws SQLException, ClassNotFoundException {
+    public JsonArray generateCustomerId(Connection connection) throws SQLException, ClassNotFoundException {
         return customerDAO.generateId(connection);
     }
 

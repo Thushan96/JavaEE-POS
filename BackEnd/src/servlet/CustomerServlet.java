@@ -1,5 +1,9 @@
 package servlet;
 
+import bo.BOFactory;
+import bo.custom.CustomerBO;
+import dto.CustomerDTO;
+
 import javax.annotation.Resource;
 import javax.json.*;
 import javax.servlet.ServletException;
@@ -21,6 +25,9 @@ public class CustomerServlet extends HttpServlet {
     @Resource(name = "java:comp/env/jdbc/pool")
     DataSource ds;
 
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -32,50 +39,61 @@ public class CustomerServlet extends HttpServlet {
 
             switch (option) {
                 case "SEARCH":
-                    System.out.println("Search");
                     String cusId = req.getParameter("cusId");
-                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
-                    pstm.setObject(1, cusId);
-                    ResultSet searchSet = pstm.executeQuery();
-
+                    CustomerDTO customer = customerBO.searchCustomer(connection, cusId);
                     JsonObjectBuilder searchCustomer = Json.createObjectBuilder();
-
-                    while (searchSet.next()) {
-                        String id = searchSet.getString(1);
-                        String name = searchSet.getString(2);
-                        String address = searchSet.getString(3);
-                        String contactNo = searchSet.getString(4);
-
-                        System.out.println(id);
-                        System.out.println(name);
-                        System.out.println(address);
-                        System.out.println(contactNo);
-
+                    if (customer != null) {
                         searchCustomer.add("status", 200);
-                        searchCustomer.add("id", id);
-                        searchCustomer.add("name", name);
-                        searchCustomer.add("address", address);
-                        searchCustomer.add("contactNo", contactNo);
-
+                        searchCustomer.add("id", customer.getId());
+                        searchCustomer.add("name", customer.getName());
+                        searchCustomer.add("address", customer.getAddress());
+                        searchCustomer.add("salary", customer.getSalary());
+                    } else {
+                        searchCustomer.add("status", 400);
                     }
-
                     writer.print(searchCustomer.build());
+//                    String cusId = req.getParameter("cusId");
+//                    PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
+//                    pstm.setObject(1, cusId);
+//                    ResultSet searchSet = pstm.executeQuery();
+//
+//                    JsonObjectBuilder searchCustomer = Json.createObjectBuilder();
+//
+//                    while (searchSet.next()) {
+//                        String id = searchSet.getString(1);
+//                        String name = searchSet.getString(2);
+//                        String address = searchSet.getString(3);
+//                        String contactNo = searchSet.getString(4);
+//
+//                        System.out.println(id);
+//                        System.out.println(name);
+//                        System.out.println(address);
+//                        System.out.println(contactNo);
+//
+//                        searchCustomer.add("status", 200);
+//                        searchCustomer.add("id", id);
+//                        searchCustomer.add("name", name);
+//                        searchCustomer.add("address", address);
+//                        searchCustomer.add("contactNo", contactNo);
+//
+//                    }
 
                     break;
                 case "CustId":
-                    ResultSet custId = connection.prepareStatement("select id from Customer").executeQuery();
-                    JsonArrayBuilder arrayBuilder2 = Json.createArrayBuilder();
-                    while (custId.next()){
-                        String id = custId.getString(1);
-                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-                        objectBuilder.add("id", id);
-                        arrayBuilder2.add(objectBuilder.build());
-                    }
+//                    ResultSet custId = connection.prepareStatement("select id from Customer").executeQuery();
+//                    JsonArrayBuilder arrayBuilder2 = Json.createArrayBuilder();
+//                    while (custId.next()){
+//                        String id = custId.getString(1);
+//                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+//                        objectBuilder.add("id", id);
+//                        arrayBuilder2.add(objectBuilder.build());
+//                    }
+                    JsonArray jsonValues = customerBO.generateCustomerId(connection);
 
                     JsonObjectBuilder responseObject = Json.createObjectBuilder();
                     responseObject.add("status", 200);
                     responseObject.add("message", "Done");
-                    responseObject.add("data", arrayBuilder2.build());
+                    responseObject.add("data", jsonValues);
                     writer.print(responseObject.build());
                     break;
                 case "CustName":
@@ -94,32 +112,34 @@ public class CustomerServlet extends HttpServlet {
                     break;
 
                 case "GETALL":
-                    ResultSet rst = connection.prepareStatement("select * from Customer").executeQuery();
-                    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(); // json array
-                    while (rst.next()) {
-                        String id = rst.getString(1);
-                        String name = rst.getString(2);
-                        String address = rst.getString(3);
-                        double salary = rst.getDouble(4);
-
-                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
-                        objectBuilder.add("id", id);
-                        objectBuilder.add("name", name);
-                        objectBuilder.add("address", address);
-                        objectBuilder.add("salary", salary);
-                        arrayBuilder.add(objectBuilder.build());
-                    }
+//                    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+//                    ResultSet rst = connection.prepareStatement("select * from Customer").executeQuery();
+//                    while (rst.next()) {
+//                        String id = rst.getString(1);
+//                        String name = rst.getString(2);
+//                        String address = rst.getString(3);
+//                        double salary = rst.getDouble(4);
+//
+//                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+//                        objectBuilder.add("id", id);
+//                        objectBuilder.add("name", name);
+//                        objectBuilder.add("address", address);
+//                        objectBuilder.add("salary", salary);
+//                        arrayBuilder.add(objectBuilder.build());
+//                    }
 
                     JsonObjectBuilder response = Json.createObjectBuilder();
                     response.add("status", 200);
                     response.add("message", "Done");
-                    response.add("data", arrayBuilder.build());
+                    response.add("data", customerBO.getAllCustomers(connection));
                     writer.print(response.build());
                     break;
             }
 
             connection.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -130,21 +150,24 @@ public class CustomerServlet extends HttpServlet {
         String customerID = req.getParameter("customerID");
         String customerName = req.getParameter("customerName");
         String customerAddress = req.getParameter("customerAddress");
-        String customerContactNo = req.getParameter("customerContactNo");
+        double customerContactNo = Double.parseDouble(req.getParameter("customerContactNo"));
 
+        CustomerDTO customer = new CustomerDTO(customerID, customerName, customerAddress, customerContactNo);
 
 
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
         try {
             Connection connection = ds.getConnection();
-            PreparedStatement pstm = connection.prepareStatement("Insert into Customer values(?,?,?,?)");
-            pstm.setObject(1, customerID);
-            pstm.setObject(2, customerName);
-            pstm.setObject(3, customerAddress);
-            pstm.setObject(4, customerContactNo);
+            boolean add = customerBO.addCustomer(connection, customer);
 
-            if (pstm.executeUpdate() > 0) {
+//            PreparedStatement pstm = connection.prepareStatement("Insert into Customer values(?,?,?,?)");
+//            pstm.setObject(1, customerID);
+//            pstm.setObject(2, customerName);
+//            pstm.setObject(3, customerAddress);
+//            pstm.setObject(4, customerContactNo);
+
+            if (add) {
                 JsonObjectBuilder response = Json.createObjectBuilder();
                 resp.setStatus(HttpServletResponse.SC_CREATED);//201
                 response.add("status", 200);
@@ -161,6 +184,8 @@ public class CustomerServlet extends HttpServlet {
             writer.print(response.build());
             resp.setStatus(HttpServletResponse.SC_OK); //200
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
@@ -172,21 +197,23 @@ public class CustomerServlet extends HttpServlet {
         String customerID = jsonObject.getString("id");
         String customerName = jsonObject.getString("name");
         String customerAddress = jsonObject.getString("address");
-        String customerContactNo = jsonObject.getString("contactNo");
+        double customerContactNo = Double.parseDouble(jsonObject.getString("contactNo"));
         PrintWriter writer = resp.getWriter();
 
 
         resp.setContentType("application/json");
+        CustomerDTO customer = new CustomerDTO(customerID, customerName, customerAddress, customerContactNo);
 
 
         try {
             Connection connection = ds.getConnection();
-            PreparedStatement pstm = connection.prepareStatement("Update Customer set name=?,address=?,contact=? where id=?");
-            pstm.setObject(1, customerName);
-            pstm.setObject(2, customerAddress);
-            pstm.setObject(3, customerContactNo);
-            pstm.setObject(4, customerID);
-            if (pstm.executeUpdate() > 0) {
+            boolean update = customerBO.updateCustomer(connection, customer);
+//            PreparedStatement pstm = connection.prepareStatement("Update Customer set name=?,address=?,contact=? where id=?");
+//            pstm.setObject(1, customerName);
+//            pstm.setObject(2, customerAddress);
+//            pstm.setObject(3, customerContactNo);
+//            pstm.setObject(4, customerID);
+            if (update) {
                 JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                 objectBuilder.add("status", 200);
                 objectBuilder.add("message", "Successfully Updated");
@@ -200,7 +227,7 @@ public class CustomerServlet extends HttpServlet {
                 writer.print(objectBuilder.build());
             }
             connection.close();
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
             objectBuilder.add("status", 500);
             objectBuilder.add("message", "Update Failed");
@@ -218,10 +245,11 @@ public class CustomerServlet extends HttpServlet {
 
         try {
             Connection connection = ds.getConnection();
-            PreparedStatement pstm = connection.prepareStatement("Delete from Customer where id=?");
-            pstm.setObject(1, customerID);
+            boolean delete = customerBO.deleteCustomer(connection, customerID);
+//            PreparedStatement pstm = connection.prepareStatement("Delete from Customer where id=?");
+//            pstm.setObject(1, customerID);
 
-            if (pstm.executeUpdate() > 0) {
+            if (delete) {
                 JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                 objectBuilder.add("status", 200);
                 objectBuilder.add("data", "");
@@ -243,6 +271,8 @@ public class CustomerServlet extends HttpServlet {
             objectBuilder.add("message", "Error");
             objectBuilder.add("data", throwables.getLocalizedMessage());
             writer.print(objectBuilder.build());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

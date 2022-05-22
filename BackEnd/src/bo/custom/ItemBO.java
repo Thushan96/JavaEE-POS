@@ -15,11 +15,13 @@ public interface ItemBO extends SuperBO {
 
     ItemDTO searchItem(Connection connection,String code) throws SQLException, ClassNotFoundException;
 
-    JsonObject generateItemCode(Connection connection) throws SQLException, ClassNotFoundException;
+    JsonArray generateItemCode(Connection connection) throws SQLException, ClassNotFoundException;
 
     boolean addItem(Connection connection,ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
 
     boolean updateItem(Connection connection,ItemDTO itemDTO) throws SQLException, ClassNotFoundException;
+
+    boolean updateQty(Connection connection,int i,String s) throws SQLException, ClassNotFoundException;
 
     boolean deleteItem(Connection connection,String code) throws SQLException, ClassNotFoundException;
 }

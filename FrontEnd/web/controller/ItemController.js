@@ -8,7 +8,7 @@ function loadAllItems() {
         method: "GET",
         success: function (resp) {
             for (const item of resp.data) {
-                let row = `<tr><td>${item.code}</td><td>${item.name}</td><td>${item.unitPrice}</td><td>${item.qtyOnHand}</td></tr>`;
+                let row = `<tr><td>${item.code}</td><td>${item.name}</td><td>${item.unitPrice}</td><td>${item.qty}</td></tr>`;
                 $("#item-Tbody").append(row);
             }
         },

@@ -18,7 +18,6 @@ import java.sql.SQLException;
 public class OrderBOImpl implements OrderBO {
 
     OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER);
-    OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDERDETAIL);
     ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM);
 
     @Override
@@ -33,7 +32,7 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public JsonArray getAllOrderDetails(Connection connection) throws SQLException, ClassNotFoundException {
-        return orderDetailDAO.getAll(connection);
+        return null;
     }
 
     @Override
@@ -48,50 +47,12 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public JsonArray searchOrderDetails(Connection connection, String id) throws SQLException, ClassNotFoundException {
-        return orderDetailDAO.searchOrderDetails(connection, id);
+        return null;
     }
 
     @Override
-    public boolean placeOrder(Connection connection, OrderDTO orderDTO) {
-        try {
-            connection.setAutoCommit(false);
-            Order order = new Order(orderDTO.getOrderId(), orderDTO.getOrderDate(), orderDTO.getCustomerId(), orderDTO.getTotal());
-            boolean add = orderDAO.add(connection, order);
-            if (!add) {
-                connection.rollback();
-                connection.setAutoCommit(true);
-                return false;
-            }
-            for (OrderDetailDTO dto : orderDTO.getOrderDetails()) {
-                OrderDetail orderDetail1 = new OrderDetail(dto.getOrderId(), dto.getItemCode(), dto.getItemName(), dto.getUnitPrice(), dto.getBuyQty(), dto.getTotal());
-                boolean orderDetailAdded = orderDetailDAO.add(connection, orderDetail1);
-                if (!orderDetailAdded) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-            }
-
-            for (OrderDetailDTO dto : orderDTO.getOrderDetails()) {
-                boolean updateQty = itemDAO.updateQty(connection, dto.getBuyQty(), dto.getItemCode());
-                if (!updateQty) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-            }
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
+    public boolean placeOrder(Connection connection, OrderDTO orderDTO) throws SQLException, ClassNotFoundException {
+        Order order=new Order(orderDTO.getOrderId(),orderDTO.getOrderDate(),orderDTO.getCustomerId(),orderDTO.getTotal());
+       return orderDAO.add(connection,order);
     }
 }

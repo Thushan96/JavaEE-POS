@@ -107,7 +107,7 @@ $('#search-button').click(function (){
                 $("#customer-id1").val(resp.id);
                 $("#customer-name1").val(resp.name);
                 $("#customer-address1").val(resp.address);
-                $("#customer-mobile1").val(resp.contactNo);
+                $("#customer-mobile1").val(resp.salary);
                 $('#txtCustomer').val("");
             }else{
                 alert("Invalid Customer ID .Try Again!")

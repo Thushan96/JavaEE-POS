@@ -39,12 +39,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean delete(Connection connection, String id) throws SQLException, ClassNotFoundException {
-        return CrudUtil.executeUpdate(connection,"DELETE FROM Customer WHERE id=?", id);
+        return CrudUtil.executeUpdate(connection, "DELETE FROM Customer WHERE id=?", id);
     }
 
     @Override
     public Customer search(Connection connection, String id) throws SQLException, ClassNotFoundException {
-        ResultSet rst = CrudUtil.executeQuery(connection,"SELECT * FROM Customer WHERE id=?", id);
+        ResultSet rst = CrudUtil.executeQuery(connection, "SELECT * FROM Customer WHERE id=?", id);
         Customer customer = null;
         while (rst.next()) {
             customer = new Customer(rst.getString(1), rst.getString(2), rst.getString(3), rst.getDouble(4));
@@ -53,29 +53,16 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public JsonObject generateId(Connection connection) throws SQLException, ClassNotFoundException {
-        ResultSet idSet = CrudUtil.executeQuery(connection, "SELECT id FROM Customer ORDER BY id DESC LIMIT 1");
-        JsonObjectBuilder obj = Json.createObjectBuilder();
-        if (idSet.next()) {
-            int tempId = Integer.parseInt(idSet.getString(1).split("-")[1]);
-            tempId = tempId + 1;
-            if (tempId <= 9) {
-                String id = "C00-000" + tempId;
-                obj.add("id", id);
-            } else if (tempId <= 99) {
-                String id = "C00-00" + tempId;
-                obj.add("id", id);
-            } else if (tempId <= 999) {
-                String id = "C00-0" + tempId;
-                obj.add("id", id);
-            } else if (tempId <= 9999) {
-                String id = "C00-" + tempId;
-                obj.add("id", id);
-            }
-        } else {
-            String id = "C00-0001";
-            obj.add("id", id);
+    public JsonArray generateId(Connection connection) throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.executeQuery(connection, "SELECT id FROM Customer");
+        JsonArrayBuilder arrayBuilder2 = Json.createArrayBuilder();
+        while (resultSet.next()){
+            String id = resultSet.getString(1);
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("id", id);
+            arrayBuilder2.add(objectBuilder.build());
         }
-        return obj.build();
+        return arrayBuilder2.build();
     }
+
 }

@@ -7,22 +7,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5020919b-b9ce-4393-b3d8-6091177675ed" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b84f3da3-0d37-4ea3-8c93-1acc306b7745.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b84f3da3-0d37-4ea3-8c93-1acc306b7745.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/CrudDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/CrudDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/CrudUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/CrudUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/DAOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/BOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/BOFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/custom/CustomerBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/custom/CustomerBO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/custom/ItemBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/custom/ItemBO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/custom/OrderBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/custom/OrderBO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/custom/impl/CustomerBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/custom/impl/CustomerBOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/custom/impl/ItemBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/custom/impl/ItemBOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/bo/custom/impl/OrderBOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/bo/custom/impl/OrderBOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/ItemDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/ItemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/ItemDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDetailDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/OrderDetailDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/CustomerDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/CustomerDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/ItemDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/ItemDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDetailDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/dao/custom/impl/OrderDetailDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/CustomerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/CustomerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/servlet/OrderServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/OrderController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/CustomerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/CustomerController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/controller/ItemController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/web/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/BackEnd_Web_exploded/BackEnd_Web exploded.war" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BackEnd/servlet/OrderServlet.class" afterDir="false" />
     </list>
@@ -35,8 +39,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -214,7 +218,7 @@
       <workItem from="1653065873708" duration="6003000" />
       <workItem from="1653108558699" duration="14440000" />
       <workItem from="1653193874406" duration="1111000" />
-      <workItem from="1653203343857" duration="6568000" />
+      <workItem from="1653203343857" duration="32538000" />
     </task>
     <servers />
   </component>
@@ -237,13 +241,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BackEnd/src/servlet/ItemServlet.java</url>
-          <line>45</line>
+          <line>52</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/BackEnd/src/dao/custom/CustomerDAO.java</url>
-          <line>10</line>
+          <line>11</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BackEnd/src/dao/custom/impl/CustomerDAOImpl.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
